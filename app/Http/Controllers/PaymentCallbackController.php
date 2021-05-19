@@ -19,7 +19,7 @@ class PaymentCallbackController extends Controller
         $data_repsonse = array();
         $data_repsonse['postData'] = $_POST;  //Incoming POST without checksumhash in it. 
         $data_repsonse['secretKey'] = $secretKey;
-        $data_repsonse['_token'] = csrf_token();
+
 
         $key = $secretKey . $merchantId;
 
