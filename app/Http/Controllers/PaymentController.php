@@ -62,7 +62,7 @@ class PaymentController extends Controller
         $sadad__checksum_data['postData'] = $sadad_checksum_array1;
         $sadad__checksum_data['secretKey'] = $secretKey;
 
-        $checksum = getChecksumFromString(json_encode($sadad__checksum_data), $secretKey . $merchantID);
+        $checksum = $this->getChecksumFromString(json_encode($sadad__checksum_data), $secretKey . $merchantID);
 
         echo $checksum;
 
@@ -75,24 +75,8 @@ class PaymentController extends Controller
             <script type="text/javascript"> document.gosadad.submit(); </script>
         ';
     }
-    function verifychecksum_eFromStr($str, $key, $checksumvalue)
-    {
-        $sadad_hash = decrypt_e($checksumvalue, $key);
-        $salt = substr($sadad_hash, -4);
-        $finalString = $str . "|" . $salt;
-        $website_hash = hash("sha256", $finalString);
-        $website_hash .= $salt;
-        $validFlag = "FALSE";
 
-        if ($website_hash == $sadad_hash) {
-            $validFlag = "TRUE";
-        } else {
-            $validFlag = "FALSE";
-        }
-        return $validFlag;
-    }
-
-    function decrypt_e($crypt, $ky)
+    public function decrypt_e($crypt, $ky)
     {
         $ky = html_entity_decode($ky);
         $iv = "@@@@&&&&####$$$$";
@@ -100,17 +84,17 @@ class PaymentController extends Controller
         return $data;
     }
 
-    function getChecksumFromString($str, $key)
+    public function getChecksumFromString($str, $key)
     {
-        $salt = generateSalt_e(4);
+        $salt = $this->generateSalt_e(4);
         $finalString = $str . "|" . $salt;
         $hash = hash("sha256", $finalString);
         $hashString = $hash . $salt;
-        $checksum = encrypt_e($hashString, $key);
+        $checksum = $this->encrypt_e($hashString, $key);
         return $checksum;
     }
 
-    function generateSalt_e($length)
+    public function generateSalt_e($length)
     {
         $random = "";
         srand((float) microtime() * 1000000);
@@ -123,7 +107,7 @@ class PaymentController extends Controller
         return $random;
     }
 
-    function encrypt_e($input, $ky)
+    public function encrypt_e($input, $ky)
     {
         $ky = html_entity_decode($ky);
         $iv = "@@@@&&&&####$$$$";

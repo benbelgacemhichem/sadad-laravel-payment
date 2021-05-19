@@ -20,7 +20,7 @@ class PaymentCallbackController extends Controller
         $data_repsonse['secretKey'] = $secretKey;
         $key = $secretKey . $merchantId;
 
-        if (verifychecksum_eFromStr(json_encode($data_repsonse), $key, $checksum_response) === "TRUE") {
+        if ($this->verifychecksum_eFromStr(json_encode($data_repsonse), $key, $checksum_response) === "TRUE") {
             //You can further check response code and transaction status variables in $_POST to verify transaction is success or failed.
             dd('Checksum TRUE');
         } else {
@@ -29,9 +29,9 @@ class PaymentCallbackController extends Controller
         }
     }
 
-    function verifychecksum_eFromStr($str, $key, $checksumvalue)
+    public function verifychecksum_eFromStr($str, $key, $checksumvalue)
     {
-        $sadad_hash = decrypt_e($checksumvalue, $key);
+        $sadad_hash = $this->decrypt_e($checksumvalue, $key);
         $salt = substr($sadad_hash, -4);
         $finalString = $str . "|" . $salt;
         $website_hash = hash("sha256", $finalString);
@@ -44,7 +44,7 @@ class PaymentCallbackController extends Controller
         }
         return $validFlag;
     }
-    function decrypt_e($crypt, $ky)
+    public function decrypt_e($crypt, $ky)
     {
         $ky = html_entity_decode($ky);
         $iv = "@@@@&&&&####$$$$";
