@@ -14,4 +14,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'PaymentController@checkout');
-Route::get('/callback', 'PaymentCallbackController@callback');
+Route::post('/callback', 'PaymentCallbackController@callback');
