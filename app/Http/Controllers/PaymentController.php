@@ -23,7 +23,7 @@ class PaymentController extends Controller
         $sadad_checksum_array['MOBILE_NO'] = '99999999';
         $sadad_checksum_array['SADAD_WEBCHECKOUT_PAGE_LANGUAGE'] = 'ENG';
         $sadad_checksum_array['CALLBACK_URL'] =
-            'http://payment.amaladvertisement.com/callback'; //replace with your callback url
+            'https://payment.amaladvertisement.com/callback'; //replace with your callback url
         $sadad_checksum_array['txnDate'] = $txnDate;
         $sadad_checksum_array['productdetail'] =
             array(
@@ -63,8 +63,6 @@ class PaymentController extends Controller
         $sadad__checksum_data['secretKey'] = $secretKey;
 
         $checksum = $this->getChecksumFromString(json_encode($sadad__checksum_data), $secretKey . $merchantID);
-
-        echo $checksum;
 
         $sAry1[] = "<input type='hidden' name='checksumhash' value='" . $checksum . "'/>";
 
