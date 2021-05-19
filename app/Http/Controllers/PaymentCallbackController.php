@@ -11,6 +11,8 @@ class PaymentCallbackController extends Controller
         $secretKey = 'tuZkgBe0jdIOHqth';
         $merchantID = '3754062';
 
+        dd(1);
+
         //Save incoming checksumhash into a variable and then unset it because we don't use it while verifying the checksum
         $checksum_response = $_POST['checksumhash'];
         unset($_POST['checksumhash']);
