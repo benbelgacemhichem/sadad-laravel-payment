@@ -10,7 +10,7 @@ class PaymentCallbackController extends Controller
     {
         $secretKey = 'tuZkgBe0jdIOHqth';
         $merchantID = '3754062';
-        $CSRFToken = csrf_token();
+
 
         //Save incoming checksumhash into a variable and then unset it because we don't use it while verifying the checksum
         $checksum_response = $_POST['checksumhash'];
@@ -19,6 +19,8 @@ class PaymentCallbackController extends Controller
         $data_repsonse = array();
         $data_repsonse['postData'] = $_POST;  //Incoming POST without checksumhash in it. 
         $data_repsonse['secretKey'] = $secretKey;
+        $data_repsonse['_token'] = csrf_token();
+
         $key = $secretKey . $merchantId;
 
         if ($this->verifychecksum_eFromStr(json_encode($data_repsonse), $key, $checksum_response) === "TRUE") {
