@@ -9,7 +9,7 @@ class PaymentCallbackController extends Controller
     public function callback()
     {
         $secretKey = 'tuZkgBe0jdIOHqth';
-        $merchantID = '3754062';
+        $merchantId = '3754062';
 
 
         //Save incoming checksumhash into a variable and then unset it because we don't use it while verifying the checksum
